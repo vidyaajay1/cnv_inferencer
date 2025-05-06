@@ -91,7 +91,7 @@ def preprocess_and_cluster(ad, resolution=0.5, n_neighbors=20, n_pcs=15):
 
     # Plot UMAP
     sc.pl.umap(ad, color="cell_type", legend_loc="on data", frameon=False, show=False)
-    plt.savefig('umap_clusters.png')
+    plt.savefig('files/umap_clusters.png')
     plt.close()
 
     return ad
