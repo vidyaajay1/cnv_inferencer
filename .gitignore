@@ -17,3 +17,4 @@ dist/
 # Virtual environments
 .venv/
 .env
+files/*.h5ad
