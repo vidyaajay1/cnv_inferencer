@@ -44,10 +44,28 @@ def annotate_genomic_positions(adata):
     )
     df = df.drop_duplicates(subset=['query'])
 
+    # Remove any existing genomic columns before merging to prevent conflicts
+    for col in ['chromosome', 'start', 'end', 'strand']:
+        if col in adata.var.columns:
+            adata.var.drop(columns=[col], inplace=True)
+
+    # Set index for merge
+    genomic_df = df[['query', 'chromosome', 'start', 'end', 'strand']].drop_duplicates()
+    genomic_df.set_index('query', inplace=True)
+
+    # Merge safely
     adata.var = adata.var.merge(
-        df[['query', 'chromosome', 'start', 'end', 'strand']],
-        left_on='gene_ids', right_on='query', how='left'
+        genomic_df,
+        left_on='gene_ids',
+        right_index=True,
+        how='left'
     )
+
+    # Ensure proper types
+    adata.var['chromosome'] = adata.var['chromosome'].astype(str)
+    adata.var['start'] = pd.to_numeric(adata.var['start'], errors='coerce').astype('Int64')
+    adata.var['end'] = pd.to_numeric(adata.var['end'], errors='coerce').astype('Int64')
+
     return adata
 
 
