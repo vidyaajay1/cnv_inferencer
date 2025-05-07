@@ -33,7 +33,9 @@ leidenalg
 
 ## Usage
 
-Sample Pipeline
+A complete sample pipeline for all functionalities of this package is available in test_run.py, please use it for getting started! \
+Here's a limited snippet for cnv calling:
+
 
 ```python
 import scanpy as sc
@@ -58,6 +60,11 @@ adata = call_cnvs(adata, output_dir="files")
 # View results
 print(adata.obs["cnv_calls"].head())
 ```
+## Sample Data
+
+If you’re testing with simulated CNVs, make sure `adata.var` contains gene IDs as gene_ids and that MyGene.info annotations can be fetched for those IDs. \
+The package expects a `.h5ad` file that has cell_type in `adata.obs` and gene_ids in `adata.var`.\
+Place your `.h5ad` test *files* here to run the CNV inference pipeline locally.
 
 ## Outputs
 
@@ -74,11 +81,6 @@ preprocess_and_cluster(adata):	Performs QC, normalization, clustering, and UMAP 
 annotate_genomic_positions(adata):	Queries gene coordinates via MyGene.info and adds chromosome, start, end to adata.var \
 call_cnvs(adata, output_dir="files"):	Infers CNVs, saves heatmaps, CSVs, and updates `adata.obs["cnv_calls"]`
 
-## Sample Data
-
-If you’re testing with simulated CNVs, make sure `adata.var` contains gene IDs as gene_ids and that MyGene.info annotations can be fetched for those IDs. \
-The package expects a `.h5ad` file that has cell_type in `adata.obs` and gene_ids in `adata.var`.\
-Place your `.h5ad` test files here to run the CNV inference pipeline locally.
 
 ## What to look for in a good run of the package
 Some warnings will be displayed on a good run, they're harmless and help in detecting the status of the code and debugging. For reference, a normal run
