@@ -13,7 +13,7 @@ def annotate_genomic_positions(adata):
     mg = mygene.MyGeneInfo()
     results = mg.querymany(
         adata.var['gene_ids'].tolist(),
-        scopes='ensembl.gene',
+        scopes=['ensembl.gene', 'symbol'],
         fields='genomic_pos',
         species='human'
     )
@@ -90,7 +90,8 @@ def preprocess_and_cluster(ad, resolution=0.5, n_neighbors=20, n_pcs=15):
     sc.tl.umap(ad)
 
     # Plot UMAP
-    sc.pl.umap(ad, color="cell_type", legend_loc="on data", frameon=False, show=False)
+    color_col = "cell_type" if "cell_type" in ad.obs.columns else "leiden"
+    sc.pl.umap(ad, color=color_col, legend_loc="on data", frameon=False, show=False)
     plt.savefig('files/umap_clusters.png')
     plt.close()
 
