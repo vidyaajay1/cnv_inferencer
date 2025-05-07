@@ -6,15 +6,16 @@
 
 ## Installation
 
-Clone the repository and install in **editable mode**:
+Clone the repository and set up a virtual environment:
 
 ```bash
 git clone https://github.com/vidyaajay1/cnv_inferencer.git
 cd cnv_inferencer
 python3 -m venv .venv
 source .venv/bin/activate
-pip install -e .
+pip install .
 ```
+
 ## Dependencies
 
 Required Python packages:
